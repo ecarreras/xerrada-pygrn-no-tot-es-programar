@@ -14,3 +14,5 @@ La xerrada tindria 5 blocs:
 Duració estimada 1h
 
 TAGS: Ecosistema, Testing, Documentació, Integració, Desplegament
+
+Issue: https://github.com/pygrn/xerrades/issues/15
