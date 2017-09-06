@@ -1,19 +1,19 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
   <head>
     <title>No tot és programar!</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Roboto);
+      @import url(https://fonts.googleapis.com/css?family=Roboto+Mono);
 
-      body { font-family: 'Droid Serif'; }
+      body { font-family: 'Roboto'; }
       h1, h2, h3 {
         font-family: 'Yanone Kaffeesatz';
         font-weight: normal;
       }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code, .remark-inline-code { font-family: 'Roboto Mono'; }
     </style>
   </head>
   <body>
@@ -25,11 +25,116 @@ class: center, middle
 ## Documentar, testejar, integrar, desplegar i monitoritzar
 
 ![PyGRN](https://avatars1.githubusercontent.com/u/28831124?v=4&s=200)
+
 Eduard Carreras i Nadal <ecarreras@gmail.com>
 
---
+---
 
-# Introduction
+# Agenda
+
+  1. Qui sóc jo?
+  2. Introducció
+  3. Documentació de projectes
+  4. Testing: Metodologia TDD i clàssica i eines
+  5. Integració: Concepte
+  6. Desplegament: Concepte i algunes eines
+  7. Monitoritzar un cop desplegat
+
+---
+
+# Qui sóc jo?
+
+- Sóc un infiltrat en el món del software (sóc teleco)
+- Apasionat del software i del proćes **art**esanal que hi ha al darrera
+- Co-Fundador de [GISCE-TI, S.L](http://gisce.net)
+- Desenvolupant en Python des del 2007 (Python ❤️)
+- Apasionat del programari lliure
+- [LinkedIn](https://www.linkedin.com/in/ecarreras/), [Twitter](https://twitter.com/ecarreras)
+  i [GitHub](https://github.com/ecarreras)
+
+---
+
+# Introducció
+
+- No tot és programar!
+- Codi, codi, codi ...
+- Cicle de vida d'una aplicació
+
+---
+
+# Documentació de projectes
+
+- Documentació tècnica (APIs)
+- Documentació d'usuari (manuals)
+
+---
+
+## Documentació tècnica (APIs)
+
+- [PEP 257 -- Docstring Conventions](https://www.python.org/dev/peps/pep-0257/)
+
+  A docstring is a string literal that occurs as the first statement in a module,
+  function, class, or method definition. Such a docstring becomes the `__doc__`
+  special attribute of that object.
+
+```python
+def hola():
+    """Això imprimeix Hola!"""
+    print('Hola)
+```
+
+- Podem consulta la pròpia ajuda des de l'entorn python `help(hola)`
+  o `hola.__doc__`
+
+
+- Doctest
+- [PEP 287 -- reStructuredText Docstring Format](https://www.python.org/dev/peps/pep-0287/)
+- Diferents formats de docstring
+  - ReStructuredText
+  - [Google](http://google.github.io/styleguide/pyguide.html?showone=Comments#Comments)
+  - [Numpy](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt)
+
+---
+
+### Documentació d'usuari (manuals)
+
+- ReStructuredText
+- Markdown
+
+---
+
+# Testing: Metodologia TDD i clàssica
+
+- Què és testing?
+- Què és TDD?
+- Metodologia clàssica (Unittests?)
+- Què ens aporta TDD?
+
+
+---
+
+# Integració (Contínua)
+
+- Què és integració continua?
+- Avantatges
+- Quins entorns hi ha?
+
+---
+
+# Desplegament
+
+- Què és desplegar?
+- De forma manual, semi-automàtica i automàtica
+- Eines
+
+---
+
+# Monitoritzar
+
+- Per què és imporant monitoritzar?
+- Ser pro-actius
+- Més informació de l'error
+- Eines que hi ha.
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
