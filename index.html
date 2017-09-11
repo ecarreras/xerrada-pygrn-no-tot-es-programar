@@ -13,7 +13,7 @@
         font-family: 'Yanone Kaffeesatz';
         font-weight: normal;
       }
-      .remark-code, .remark-inline-code { font-family: 'Roboto Mono'; }
+      .remark-code, .remark-inline-code { font-family: 'Roboto Mono'; font-size: 0.6em }
     </style>
   </head>
   <body>
@@ -26,7 +26,11 @@ class: center, middle
 
 ![PyGRN](https://avatars1.githubusercontent.com/u/28831124?v=4&s=200)
 
-Eduard Carreras i Nadal <ecarreras@gmail.com>
+[Eduard Carreras i Nadal](mailto:ecarreras@gmail.com)
+
+13/09/2017 - PyGRN #2
+
+[![](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)
 
 ---
 
@@ -78,28 +82,320 @@ Eduard Carreras i Nadal <ecarreras@gmail.com>
   special attribute of that object.
 
 ```python
+"""Aquest mòdul de python té funcions per saludar"""
+
+
 def hola():
     """Això imprimeix Hola!"""
-    print('Hola)
+    print('Hola')
 ```
 
 - Podem consulta la pròpia ajuda des de l'entorn python `help(hola)`
   o `hola.__doc__`
 
+- Ens hauríem d'acostumar més a escriure *docstrings* com a documentació tècnica
+  no només les signatures de les funcions
 
-- Doctest
-- [PEP 287 -- reStructuredText Docstring Format](https://www.python.org/dev/peps/pep-0287/)
-- Diferents formats de docstring
-  - ReStructuredText
-  - [Google](http://google.github.io/styleguide/pyguide.html?showone=Comments#Comments)
-  - [Numpy](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt)
+---
+## Documentació tècnica (APIs) - Història
+
+- No hi havia cap estàndard definit.
+- Què passa quan es vol *enriquir* una mica el text?
+  - HTML, DocBook, TeX, ...
+
+### Objectius
+
+ - Ha de ser fàcil de llegir des del propi codi font
+ - Fàcil d'escriure des de qualsevol editor
+ - No ha de tenir informació que hagi de ser deduida de parsejar el mòdarcula
+ - Ha de tenir suficinent *estructura* per poder-se convertir a altres formats
+ - Ha de ser fàcil escriure **tota** la documentació d'un mòdul sense fer sentir
+   sobrecarregat
+
+### Solució
+
+ - [PEP 287 -- reStructuredText Docstring Format](https://www.python.org/dev/peps/pep-0287/)
 
 ---
 
-### Documentació d'usuari (manuals)
+## Documentació tècnica (APIs) - ReStructuredText exemple
 
+```python
+class Keeper(Storer):
+
+    """Keep data fresher longer.
+
+    Extend `Storer`.  Class attribute `instances` keeps track
+    of the number of `Keeper` objects instantiated.
+    """
+
+    instances = 0
+    """How many `Keeper` objects are there?"""
+
+    def __init__(self):
+        """
+        Extend `Storer.__init__()` to keep track of
+        instances.  Keep count in `self.instances` and data
+        in `self.data`.
+        """
+        Storer.__init__(self)
+        self.instances += 1
+
+        self.data = []
+        """Store data in a list, most recent last."""
+
+    def storedata(self, data):
+        """
+        Extend `Storer.storedata()`; append new `data` to a
+        list (in `self.data`).
+        """
+        self.data = data
+```
+---
+## Documentació tècnica (APIs) - Metainformació
+
+- Diferents formats de metainformació
+  - ReStructuredText
+  - [Google](http://google.github.io/styleguide/pyguide.html?showone=Comments#Comments)
+  - [Numpy](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt)
+  - [PEP 3107 -- Function Annotations](https://www.python.org/dev/peps/pep-3107/)
+    (només Python 3!)
+
+### ReStructuredText
+
+```python
+def stupid_method(first, second):
+    """Aquest mètode retorna la suma dels dos paràmetres.
+
+    :param int first: El primer paràmentre
+    :param int second: El segon paràmentre
+    :return: La suma dels paràmetres
+    :rtype: int
+    :raises ValueError: Si algun dels dos paràmetres no és un enter
+    """
+    if not (isinstance(first, int) and isinstance(second int)):
+        raise ValueError("must be integers!")
+    return first + second
+```
+
+---
+## Documentació tècnica (APIs) - Metainformació
+### Google
+
+```python
+def stupid_method(first, second):
+    """Aquest mètode retorna la suma dels dos paràmetres.
+
+    Args:
+        first: Un int com a primer paràmetre.
+        second: Un int com a segon paràmetre.
+
+    Returns:
+        Un int corresponent a la suma dels paràmetres
+
+    Raises:
+        ValueError: Si algun dels dos paràmetres no és un enter
+    """
+    if not (isinstance(first, int) and isinstance(second, int)):
+        raise ValueError("must be integers!")
+    return first + second
+```
+---
+
+## Documentació tècnica (APIs) - Metainformació
+### Numpy
+
+```python
+def stupid_method(first, second):
+    """Aquest mètode retorna la suma dels dos paràmetres.
+
+    Parametres
+    ----------
+    first: int
+           Un int com a primer paràmetre.
+    second: int
+            Un int com a segon paràmetre.
+
+    Returns
+    -------
+    int
+        La suma dels paràmetres
+
+    Raises
+    ------
+    ValueError
+        Si algun dels dos paràmetres no és un enter
+    """
+    if not (isinstance(first, int) and isinstance(second, int)):
+        raise ValueError("must be integers!")
+    return first + second
+```
+
+---
+
+## Documentació tècnica (APIs) - Metainformació
+### Function Annotations
+
+```python
+def stupid_method(first: int, second: int) -> int:
+    """Aquest mètode retorna la suma dels dos paràmetres.
+
+    :param first: El primer paràmentre
+    :param second: El segon paràmentre
+    :return: La suma dels paràmetres
+    :raises ValueError: Si algun dels dos paràmetres no és un enter
+    """
+    if not (isinstance(first, int) and isinstance(second, int)):
+        raise ValueError("must be integers!")
+    return first + second
+```
+
+```python
+def stupid_method(first: "El primer paràmentre",
+                  second: "El segon paràmentre") -> "La suma dels paràmetres":
+    """Aquest mètode retorna la suma dels dos paràmetres.
+
+    :raises ValueError: Si algun dels dos paràmetres no és un enter
+    """
+    if not (isinstance(first, int) and isinstance(second, int)):
+        raise ValueError("must be integers!")
+    return first + second
+```
+
+- Podem accedir a la informació des l'intèrpret. `supid_method.func_annotations`
+  i retorna un diccionari amb les anotacions.
+
+---
+
+## Documentació tècnica (APIs) - Doctest
+
+- Barreja entre tenir documentació, exemples i tests. (3 en 1).
+- La [documentació de doctest](https://docs.python.org/3/library/doctest.html)
+  és molt extensa i permet moltes coses.
+
+```python
+def stupid_method(first, second):
+    """Aquest mètode retorna la suma dels dos paràmetres.
+
+    >>> stupid_method(1, 2)
+    3
+    >>> stupid_method("a", 2)
+    Traceback (most recent call last):
+      ...
+    ValueError: must be integers!
+    >>> stupid_method(1, "a")
+    Traceback (most recent call last):
+      ...
+    ValueError: must be integers!
+    """
+    if not (isinstance(first, int) and isinstance(second, int)):
+        raise ValueError("must be integers!")
+    return first + second
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+```
+
+- Podem llançar els tests directament amb:
+
+```sh
+$ python stupid.py -v
+```
+
+---
+
+## Documentació tècnica (APIs) - Eina
+### [Sphinx](http://www.sphinx-doc.org)
+
+És una eina per **crear documentació** i podem destacar les següents funcionalitats:
+  - **Diferents formats de sortida**: HTML (diferents temes), WinHelp,
+    LaTeX (pels PDFs), ePub, Texinfo, manpages, text pla.
+  - **Referències creuades**: Enllaços semàntics automàtics de funcions, classes,
+    definicions, ... Fins i tot d'altres documentacions!
+  - **Estructura jeràrquica**: Tot queda organitzat en arbre.
+  - **Índex automàtics**: Índex general i també de tots els mòduls.
+  - **Visualització de codi**: Fent servir la llibreria de resaltat [Pygments](http://pygments.org/)
+  - **Extensible**: [Extensions pròpies](http://www.sphinx-doc.org/en/stable/ext/builtins.html#builtin-sphinx-extensions)
+    o de tercers [instal·lables des de Pypi](https://pypi.org/search/?q=sphinx+extension)
+
+Té un assistent per la creació de projectes:
+
+```sh
+$ pip install Sphinx
+$ sphinx-quickstart my-project
+```
+
+---
+
+## Documentació d'usuari (on i com?)
+
+- ~~Processadors de text~~
+
+  **Al carrer!** El descartem directament.
+
+  - Formats pesats i normalment binaris
+  - Dificultat per fer edició per parts o distribuïda
+  - Dificultat per gestionar un històric de canvis
+  - Dificultat per gestionar revisions de canvis i ampliacions
+
+  **Spoiler**: Tracte el teu manual com si fos codi.
+
+  - Fes servir un format de text pla que pugui ser escrit i editat des de
+    qualsevol editor.
+  - Guarda el manual en un repositori de control de versions (Git)
+  - Podem editar per parts o de forma distribuïda gràcies el control de versions
+  - Tenim històric!
+  - Tenim un sistema de *Pull requests* per revisar i aprovar canvis (Merge!)
+  - Fins i tot podem tenir tests del manual!
+
+---
+## Documentació d'usuari (format)
+
+Hi ha dos formats de text pla que són ampliament reconeguts:
 - ReStructuredText
-- Markdown
+- Markdown (ho està petant!)
+
+---
+## Documentació d'usuari (format)
+
+### ReStructuredText vs Markdown
+
+#### ReStructuredText
+
+- 🔝 Sphinx és una de les millors eines de generació de documentació
+- 🔝 Molt potent. Suporta referències, notes de peu, bibliografia
+- 🔝 Moltes, moltes i moltes extensions
+- ❌ Sintàxis força complexe
+
+#### Markdown
+
+ - 🔝 Sintàxis senzilla
+ - ❌ Hi ha diferents "sabors" -> [CommonMark](http://commonmark.org/)
+ - ❌ Poques funcionalitats avançades
+---
+## Documentació d'usuari (eines)
+
+- Ja hem parlat d'[Sphinx](#14)
+- Presentem també una eina per Markdown: [MKdocs](http://www.mkdocs.org/)
+  - No te tants suports de sortida com ReStructuredText + Sphinx
+  - D'una forma fàcil pots tenir una pàgina amb manual d'usuari
+  - Més fàcil col·laboració per membres no tècnics
+  - Extensible amb totes les extensions de [Python-Markdown](https://pythonhosted.org/Markdown/)
+- Publicació: [ReadTheDocs](https://readthedocs.org/)
+
+### Cicle possible
+
+1. Creem una branca per afegir/modificar documentació
+2. Work and commit
+3. Push!
+4. Pull-request
+5. Testing (el format és vàlid, hi ha traduccions?, faltes d'ortografia, ...)
+6. Construcció del lloc temporal amb els canvis
+7. Revisió
+8. Merge
+9. Publicació automàtica nova versió
+
 
 ---
 
@@ -140,7 +436,10 @@ def hola():
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
     </script>
     <script>
-      var slideshow = remark.create();
+      var slideshow = remark.create({
+        highlightStyle: 'darcula',
+        highlightLanguage: 'python'
+      });
     </script>
   </body>
 </html>
