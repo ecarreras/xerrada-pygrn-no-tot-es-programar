@@ -49,10 +49,10 @@ class: center, middle
 # Qui sóc jo?
 
 - Sóc un infiltrat en el món del software (sóc teleco)
-- Apasionat del software i del proćes **art**esanal que hi ha al darrera
+- Apassionat del software i del proćes **art**esanal.
 - Co-Fundador de [GISCE-TI, S.L](http://gisce.net)
 - Desenvolupant en Python des del 2007 (Python ❤️)
-- Apasionat del programari lliure
+- Amant del programari lliure
 - [LinkedIn](https://www.linkedin.com/in/ecarreras/), [Twitter](https://twitter.com/ecarreras)
   i [GitHub](https://github.com/ecarreras)
 
@@ -398,18 +398,100 @@ Hi ha dos formats de text pla que són ampliament reconeguts:
 
 
 ---
+## Testing (Què és?)
 
-# Testing: Metodologia TDD i clàssica
+**Possible definició**:
+>> La prova de programari és un conjunt de processos dirigits a investigar,
+avaluar i determinar la **integritat** i la **qualitat** del programari informàtic.
 
-- Què és testing?
-- Què és TDD?
-- Metodologia clàssica (Unittests?)
-- Què ens aporta TDD?
-
+>> Les proves de programari garanteixen el **compliment** d'un producte de programari
+en relació **amb els requisits** regulatoris, empresarials, tècnics, funcionals
+i d'usuaris.
 
 ---
+## Testing (Quins hi ha)
 
-# Integració (Contínua)
+Definició per [Robert C. Martin](https://en.wikipedia.org/wiki/Robert_Cecil_Martin)
+dels [tipus de tests](http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.html).
+
+  - **Tests unitaris**: Escrit pel programador per tal que el codi faci el que el
+    programador espera que faci.
+
+  - **Tests d'acceptació**: Escrit per *Negoci* amb el propòsit que el codi faci el
+    que *Negoci* necessita.
+
+  - **Tests d'integració**: Assegurar-se que els **subsistemes** funcionen de forma
+    correcte entre ells. (No tenen a veure amb regles de *negoci*)
+
+  - **Tests de sistema**: Semblants als d'integració però amb **tot el sistema**
+
+  - **Micro-tests**: Semblant als tests unitaris, però per una sola funció o
+    un grup de tests molt reduit.
+
+  - **Tests funcionals**: Tests amb un abast més gran amb *mocks* per els components
+    més lents.
+
+---
+## Testing (Quan els fem)
+
+- Abans o deprés? TDD
+- Desenvolupament guiat per exemples
+- [Regles del TDD](http://www.eferro.net/2012/09/resumen-clean-coders-capitulo-6-tdd.html):
+  - **No** escriure codi de producció si no és perquè un test està fallant
+  - Escriure el **mínim** d'un test per fer fallar
+  - Escriure el **mínim** codi necessari per passar el test
+- Tenim sempre el test abans d'escriure el codi -> **Bona covertura**
+- **No ens fa por canviar/netejar** el codi
+---
+## Testing (eines)
+
+### Execució de tests (UnitTest) + `self.assertX`:
+- Llibreria estàndard ([unittest](https://docs.python.org/3/library/unittest.html))
+
+```python
+class TestStupidMethod(TestCase):
+    def test_two_integers_returns_the_sum(self):
+        result = stupid_method(1, 2)
+        self.assertEqual(result, 3)
+
+    def test_first_param_no_integer_raises_value_error(self):
+        def raise_value_error():
+            stupid_method("a", 1)
+        self.assertRaises(ValueError, raise_valueerror)
+```
+
+- Millores a la llibreria estàndard (UnitTesting):
+  - 🔝 [PyTest](https://docs.pytest.org)
+  - ❌ [Nose2](http://nose2.readthedocs.io)
+
+---
+## Testing (eines)
+
+### Execució de tests (BDD) + [Expects](https://expects.readthedocs.io/en/stable/):
+
+- [Behave](http://pythonhosted.org/behave/)
+- [Mamba](http://nestorsalceda.github.io/mamba/)
+
+```python
+with description('Using the stupid_method'):
+    with context('when passing two integers'):
+        with it('should return the sum of them'):
+            result = stupid_method(1, 2)
+            expect(result).to(equal(3))
+    with context('when passing a string and an integer'):
+        with it('should raise a ValueError'):
+            def raises_value_error():
+                stupid_method("a", 1)
+            expect(raise_value_error).to(raise_error(ValueError))
+```
+
+### Tests funcionals
+
+- [Mock](https://docs.python.org/3/library/unittest.mock.html)
+- [vcrpy](http://vcrpy.readthedocs.io/en/latest/)
+
+---
+## Integració (Contínua)
 
 - Què és integració continua?
 - Avantatges
@@ -417,7 +499,7 @@ Hi ha dos formats de text pla que són ampliament reconeguts:
 
 ---
 
-# Desplegament
+## Desplegament
 
 - Què és desplegar?
 - De forma manual, semi-automàtica i automàtica
@@ -425,7 +507,7 @@ Hi ha dos formats de text pla que són ampliament reconeguts:
 
 ---
 
-# Monitoritzar
+## Monitoritzar
 
 - Per què és imporant monitoritzar?
 - Ser pro-actius
