@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>No tot és programar!</title>
@@ -14,13 +14,19 @@
         font-weight: normal;
       }
       .remark-code, .remark-inline-code { font-family: 'Roboto Mono'; font-size: 0.6em }
+      .small {
+        font-size: 0.8em;
+      }
+      a:link, a:visited {
+        color: #E40066;
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
     <textarea id="source">
-
 class: center, middle
-
+count: false
 # No tot és programar!
 ## Documentar, testejar, integrar, desplegar i monitoritzar
 
@@ -31,18 +37,6 @@ class: center, middle
 13/09/2017 - PyGRN #2
 
 [![](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)
-
----
-
-# Agenda
-
-  1. Qui sóc jo?
-  2. Introducció
-  3. Documentació de projectes
-  4. Testing: Metodologia TDD i clàssica i eines
-  5. Integració: Concepte
-  6. Desplegament: Concepte i algunes eines
-  7. Monitoritzar un cop desplegat
 
 ---
 
@@ -58,14 +52,15 @@ class: center, middle
 
 ---
 
-# Introducció
+# Agenda
 
-- No tot és programar!
-- Codi, codi, codi ...
-- Cicle de vida d'una aplicació
+  1. Documentació de projectes
+  2. Testing
+  3. Integració continua
+  4. Desplegament
+  5. Monitorització
 
 ---
-
 # Documentació de projectes
 
 - Documentació tècnica (APIs)
@@ -87,14 +82,14 @@ class: center, middle
 
 def hola():
     """Això imprimeix Hola!"""
-    print('Hola')
+    print('Hola!')
 ```
 
-- Podem consulta la pròpia ajuda des de l'entorn python `help(hola)`
+- Podem consultar l'ajuda des de l'entorn python `help(hola)`
   o `hola.__doc__`
 
-- Ens hauríem d'acostumar més a escriure *docstrings* com a documentació tècnica
-  no només les signatures de les funcions
+- Ens hauríem d'acostumar més a escriure *docstrings* com a documentació tècnica.
+  No només les signatures de les funcions.
 
 ---
 ## Documentació tècnica (APIs) - Història
@@ -107,10 +102,9 @@ def hola():
 
  - Ha de ser fàcil de llegir des del propi codi font
  - Fàcil d'escriure des de qualsevol editor
- - No ha de tenir informació que hagi de ser deduida de parsejar el mòdarcula
- - Ha de tenir suficinent *estructura* per poder-se convertir a altres formats
- - Ha de ser fàcil escriure **tota** la documentació d'un mòdul sense fer sentir
-   sobrecarregat
+ - No ha de tenir informació que hagi de ser deduida de parsejar el mòdul
+ - Ha de tenir prou *estructura* per poder-se convertir a altres formats
+ - Ha de ser fàcil escriure **tota** la documentació d'un mòdul còmodament
 
 ### Solució
 
@@ -249,7 +243,6 @@ def stupid_method(first: int, second: int) -> int:
         raise ValueError("must be integers!")
     return first + second
 ```
-
 ```python
 def stupid_method(first: "El primer paràmentre",
                   second: "El segon paràmentre") -> "La suma dels paràmetres":
@@ -271,7 +264,7 @@ def stupid_method(first: "El primer paràmentre",
 
 - Barreja entre tenir documentació, exemples i tests. (3 en 1).
 - La [documentació de doctest](https://docs.python.org/3/library/doctest.html)
-  és molt extensa i permet moltes coses.
+  és molt extensa i permet fer moltes coses.
 
 ```python
 def stupid_method(first, second):
@@ -334,19 +327,19 @@ $ sphinx-quickstart my-project
 
   **Al carrer!** El descartem directament.
 
-  - Formats pesats i normalment binaris
-  - Dificultat per fer edició per parts o distribuïda
+  - Formats pesats i normalment són binaris
+  - Dificultat per fer edició per parts o de forma distribuïda
   - Dificultat per gestionar un històric de canvis
   - Dificultat per gestionar revisions de canvis i ampliacions
 
-  **Spoiler**: Tracte el teu manual com si fos codi.
+  **Spoiler**: [Tracte la documentació com si fos codi](https://github.com/blog/1939-how-github-uses-github-to-document-github)
 
   - Fes servir un format de text pla que pugui ser escrit i editat des de
     qualsevol editor.
   - Guarda el manual en un repositori de control de versions (Git)
-  - Podem editar per parts o de forma distribuïda gràcies el control de versions
-  - Tenim històric!
-  - Tenim un sistema de *Pull requests* per revisar i aprovar canvis (Merge!)
+      - Podem editar per parts o de forma distribuïda gràcies el control de versions
+      - Tenim històric!
+      - Tenim un sistema de *Pull requests* per revisar i aprovar canvis (Merge!)
   - Fins i tot podem tenir tests del manual!
 
 ---
@@ -371,7 +364,7 @@ Hi ha dos formats de text pla que són ampliament reconeguts:
 #### Markdown
 
  - 🔝 Sintàxis senzilla
- - ❌ Hi ha diferents "sabors" -> [CommonMark](http://commonmark.org/)
+ - ❌ Hi ha diferents "sabors" ➜ [CommonMark](http://commonmark.org/)
  - ❌ Poques funcionalitats avançades
 ---
 ## Documentació d'usuari (eines)
@@ -380,12 +373,12 @@ Hi ha dos formats de text pla que són ampliament reconeguts:
 - Presentem també una eina per Markdown: [MKdocs](http://www.mkdocs.org/)
   - No te tants suports de sortida com ReStructuredText + Sphinx
   - D'una forma fàcil pots tenir una pàgina amb manual d'usuari
-  - Més fàcil col·laboració per membres no tècnics
+  - Fem més fàcil la col·laboració per membres no tècnics
   - Extensible amb totes les extensions de [Python-Markdown](https://pythonhosted.org/Markdown/)
 - Publicació: [ReadTheDocs](https://readthedocs.org/)
 
 ### Cicle possible
-
+.small[
 1. Creem una branca per afegir/modificar documentació
 2. Work and commit
 3. Push!
@@ -394,7 +387,7 @@ Hi ha dos formats de text pla que són ampliament reconeguts:
 6. Construcció del lloc temporal amb els canvis
 7. Revisió
 8. Merge
-9. Publicació automàtica nova versió
+9. Publicació automàtica nova versió]
 
 
 ---
@@ -440,7 +433,7 @@ dels [tipus de tests](http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefini
   - **No** escriure codi de producció si no és perquè un test està fallant
   - Escriure el **mínim** d'un test per fer fallar
   - Escriure el **mínim** codi necessari per passar el test
-- Tenim sempre el test abans d'escriure el codi -> **Bona covertura**
+- Tenim sempre el test abans d'escriure el codi ➜ **Bona covertura**
 - **No ens fa por canviar/netejar** el codi
 ---
 ## Testing (eines)
@@ -485,34 +478,73 @@ with description('Using the stupid_method'):
             expect(raise_value_error).to(raise_error(ValueError))
 ```
 
-### Tests funcionals
+### Tests funcionals (eines)
 
+- [doublex](http://python-doublex.readthedocs.io/en/latest/)
 - [Mock](https://docs.python.org/3/library/unittest.mock.html)
 - [vcrpy](http://vcrpy.readthedocs.io/en/latest/)
 
 ---
-## Integració (Contínua)
+## Integració Contínua (CI)
 
-- Què és integració continua?
-- Avantatges
-- Quins entorns hi ha?
+- Tots els canvis s'han d'integrar a la branca *principal*: **ràpid**
+- S'han de passar els tests per comprovar que aquests canvis són correctes
+- Evita tenir el *cahos* de la release
+- Ens permet tenir sempre una versió *testing* (binari)
+- Trobem ràpid bugs d'integració
+- Obtenir mètriques d'evolució: covertura, complexitat, fallades.
+
+### Eines
+
+- [Buildbot](https://buildbot.net/) (Python powered)
+- [Jenkins](https://jenkins.io/)
+- [Drone](https://github.com/drone/drone)
+- [Travis](https://travis-ci.org/)
+- [CircleCI](https://circleci.com/)
+- ...
 
 ---
 
 ## Desplegament
 
-- Què és desplegar?
-- De forma manual, semi-automàtica i automàtica
-- Eines
+- Conjunt d'activitats que fa que un sofware sigui utiltizable.
+- On? Altres serveis? pre-condicions, post-condicions
+- 3 nivells de desplegament
+    - Manual
+    - Semi-automàtic
+    - Automàtic ➜ Augmentar número de desplegaments
+
+### Eines
+- [Fabric](http://www.fabfile.org/) + [Fabtools](http://fabtools.readthedocs.io):
+  Executa ordres remotes a través de SSH
+- [Ansible](https://www.ansible.com/application-deployment): Llibres de receptes
+  amb un sistema de plantilles molt potent i moltes receptes ja fetes
+- [dh-virtualenv](http://dh-virtualenv.readthedocs.io/en/latest/): Crea paquets
+  compatibles amb Debian amb un *virtualenv* autocontingut
 
 ---
 
 ## Monitoritzar
 
-- Per què és imporant monitoritzar?
+- Volem fer desplegaments més sovint
+- Provar una funcionalitat a producció
 - Ser pro-actius
 - Més informació de l'error
-- Eines que hi ha.
+
+### Eines
+
+- [Sentry](https://github.com/getsentry/sentry) (Python powered)
+
+---
+class: center, middle
+
+# Preguntes?
+# 🙈 🙉 🙊
+
+---
+class: center, middle
+
+# Moltes gràcies!
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
@@ -520,7 +552,10 @@ with description('Using the stupid_method'):
     <script>
       var slideshow = remark.create({
         highlightStyle: 'darcula',
-        highlightLanguage: 'python'
+        highlightLanguage: 'remark',
+        highlightLines: true,
+        slideNumberFormat: '%current%/%total%',
+        ratio: '4:3'
       });
     </script>
   </body>
