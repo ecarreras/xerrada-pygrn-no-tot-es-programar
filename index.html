@@ -56,7 +56,7 @@ count: false
 
   1. Documentació de projectes
   2. Testing
-  3. Integració continua
+  3. Integració contínua
   4. Desplegament
   5. Monitorització
 
@@ -108,7 +108,7 @@ def hola():
 
  - Ha de ser fàcil de llegir des del propi codi font
  - Fàcil d'escriure des de qualsevol editor
- - No ha de tenir informació que hagi de ser deduida de parsejar el mòdul
+ - No ha de tenir informació que hagi de ser deduïda de parsejar el mòdul
  - Ha de tenir prou *estructura* per poder-se convertir a altres formats
  - Ha de ser fàcil escriure **tota** la documentació d'un mòdul còmodament
 
@@ -261,7 +261,7 @@ def stupid_method(first: "El primer paràmentre",
     return first + second
 ```
 
-- Podem accedir a la informació des l'intèrpret. `supid_method.func_annotations`
+- Podem accedir a la informació des de l'intèrpret. `supid_method.func_annotations`
   i retorna un diccionari amb les anotacions.
 
 ---
@@ -343,7 +343,7 @@ $ sphinx-quickstart my-project
   - Fes servir un format de text pla que pugui ser escrit i editat des de
     qualsevol editor.
   - Guarda el manual en un repositori de control de versions (Git)
-      - Podem editar per parts o de forma distribuïda gràcies el control de versions
+      - Podem editar per parts o de forma distribuïda gràcies al control de versions
       - Tenim històric!
       - Tenim un sistema de *Pull requests* per revisar i aprovar canvis (Merge!)
   - Fins i tot podem tenir tests del manual!
@@ -351,7 +351,7 @@ $ sphinx-quickstart my-project
 ---
 ## Documentació d'usuari (format)
 
-Hi ha dos formats de text pla que són ampliament reconeguts:
+Hi ha dos formats de text pla que són àmpliament reconeguts:
 - ReStructuredText
 - Markdown (ho està petant!)
 
@@ -369,7 +369,7 @@ Hi ha dos formats de text pla que són ampliament reconeguts:
 
 #### Markdown
 
- - 🔝 Sintàxis senzilla
+ - 🔝 Sintaxi senzilla
  - ❌ Hi ha diferents "sabors" ➜ [CommonMark](http://commonmark.org/)
  - ❌ Poques funcionalitats avançades
 ---
@@ -377,7 +377,7 @@ Hi ha dos formats de text pla que són ampliament reconeguts:
 
 - Ja hem parlat d'[Sphinx](#14)
 - Presentem també una eina per Markdown: [MKdocs](http://www.mkdocs.org/)
-  - No te tants suports de sortida com ReStructuredText + Sphinx
+  - No té tants suports de sortida com ReStructuredText + Sphinx
   - D'una forma fàcil pots tenir una pàgina amb manual d'usuari
   - Fem més fàcil la col·laboració per membres no tècnics
   - Extensible amb totes les extensions de [Python-Markdown](https://pythonhosted.org/Markdown/)
@@ -420,7 +420,7 @@ dels [tipus de tests](http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefini
     que *Negoci* necessita.
 
   - **Tests d'integració**: Assegurar-se que els **subsistemes** funcionen de forma
-    correcte entre ells. (No tenen a veure amb regles de *negoci*)
+    correcta entre ells. (No tenen a veure amb regles de *negoci*)
 
   - **Tests de sistema**: Semblants als d'integració però amb **tot el sistema**
 
@@ -442,9 +442,9 @@ dels [tipus de tests](http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefini
   - **No** escriure codi de producció si no és perquè un test està fallant
   - Escriure el **mínim** d'un test per fer fallar
   - Escriure el **mínim** codi necessari per passar el test
-- Tenim sempre el test abans d'escriure el codi ➜ **Bona covertura**
+- Tenim sempre el test abans d'escriure el codi ➜ **Bona cobertura**
 
-### ♪ Uh! Oh! no tinc por! ♫
+### ♪ Uh! Oh! No tinc por! ♫
 
 - **No ens fa por** netejar el codi
 - **No ens fa por** canviar codi
@@ -504,10 +504,10 @@ with description('Using the stupid_method'):
 
 - Tots els canvis s'han d'integrar a la branca *principal*: **ràpid**
 - S'han de passar els tests per comprovar que aquests canvis són correctes
-- Evita tenir el *cahos* de la release
+- Evita tenir el *caos* de la release
 - Ens permet tenir sempre una versió *testing* (binari)
 - Trobem ràpid bugs d'integració
-- Obtenir mètriques d'evolució: covertura, complexitat, fallades.
+- Obtenir mètriques d'evolució: cobertura, complexitat, fallades.
 
 ### Eines
 
